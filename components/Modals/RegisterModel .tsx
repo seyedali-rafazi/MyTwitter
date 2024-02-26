@@ -13,7 +13,7 @@ const RegisterModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   const router = useRouter();
-  const { data: currentUser } = useCurrentUser();
+  const { data: currentUser, mutate } = useCurrentUser();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -52,20 +52,20 @@ const RegisterModal = () => {
       signIn("credentials", {
         email,
         password,
-        callbackUrl: "/",
         redirect: false, // Important to prevent Next.js from automatically redirecting
       });
+
+      await mutate(); // Trigger a rerender by calling the mutate function
 
       navigateToHome(); // Redirect to home page
 
       registerModal.onClose();
-      router.back();
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setisLoding(false);
     }
-  }, [email, password, registerModal, username, name, router]);
+  }, [email, password, registerModal, username, name, navigateToHome, mutate]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
