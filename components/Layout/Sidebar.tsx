@@ -13,10 +13,18 @@ import { useRouter } from "next/router";
 
 const Sidebar = () => {
   const { data: currentUser, mutate } = useCurrentUser();
+  const router = useRouter();
+
+  const navigateToHome = useCallback(() => {
+    router.reload();
+  }, [router]);
 
   const handelOnClick = useCallback(async () => {
-    await signOut();
+    await signOut({
+      redirect: false, // Important to prevent Next.js from automatically redirecting
+    });
     await mutate(); // Trigger a rerender by calling the mutate function
+    navigateToHome(); // Redirect to home page
   }, [mutate]);
 
   const items = [
