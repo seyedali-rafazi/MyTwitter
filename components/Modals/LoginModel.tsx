@@ -13,8 +13,8 @@ const LoginModal = () => {
   const router = useRouter();
   const { data: currentUser, mutate } = useCurrentUser();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("demo@gmail.com");
+  const [password, setPassword] = useState("1234");
   const [isLoding, setisLoding] = useState(false);
 
   const onToggel = useCallback(() => {
